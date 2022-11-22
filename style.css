@@ -1,0 +1,314 @@
+html {
+	font-family: 'Times New Roman';
+}
+
+#contentContainer {
+	display: flex;
+	max-height: calc(100vh - 16px);
+}
+
+#contentContainer #menu {
+		flex: 1;
+		display: grid;
+		grid-template-rows: auto 1fr;
+		grid-template-areas:
+			"a b"
+			"c c";
+		overflow-x: none;
+		overflow-y: auto;
+		overflow: none auto;
+	}
+
+#contentContainer #menu>#undo,
+		#contentContainer #menu>#config {
+			min-width: 50px;
+			position: sticky;
+		}
+
+#contentContainer #menu>#moves {
+			grid-area: c;
+		}
+
+#moves {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-auto-rows: min-content;
+}
+
+#moves div {
+		width: 100%;
+		text-align: center;
+	}
+
+#moves div::before {
+			content: attr(data-row);
+			left: 0;
+			float: left;
+		}
+
+#moves div:nth-child(4n+1),
+		#moves div:nth-child(4n+2) {
+			background: #eee;
+		}
+
+#configScreen {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: repeat(2, 1fr);
+	width: 50vw;
+	height: 50vh;
+	background-color: white;
+	grid-gap: 1vmin;
+	gap: 1vmin;
+	font-size: 3vmin;
+}
+
+#configScreen>div {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+	}
+
+#configScreen>div>* {
+			vertical-align: sub;
+		}
+
+#configScreen>div>input[type=color] {
+			justify-self: right;
+		}
+
+#configScreen>button {
+		grid-column: 1 / 3;
+	}
+
+#winscreen {
+	display: flex;
+	flex-direction: column;
+	width: 50vw;
+	height: 50vh;
+	justify-content: space-around;
+	background-color: white;
+}
+
+#winscreen>div {
+		flex: 1;
+	}
+
+input,
+button {
+	font-family: 'Times New Roman';
+	border-radius: 1em;
+}
+
+svg {
+	overflow: visible;
+	background-color: white;
+}
+
+svg:hover {
+		background-color: #ddd;
+	}
+
+.board {
+	display: grid;
+	grid-template-rows: repeat(8, min(12vmin, calc((96vw - 100px)/8)));
+	grid-template-columns: repeat(8, min(12vmin, calc((96vw - 100px)/8)));
+	grid-template-areas:
+		"_8x1 _8x2 _8x3 _8x4 _8x5 _8x6 _8x7 _8x8"
+		"_7x1 _7x2 _7x3 _7x4 _7x5 _7x6 _7x7 _7x8"
+		"_6x1 _6x2 _6x3 _6x4 _6x5 _6x6 _6x7 _6x8"
+		"_5x1 _5x2 _5x3 _5x4 _5x5 _5x6 _5x7 _5x8"
+		"_4x1 _4x2 _4x3 _4x4 _4x5 _4x6 _4x7 _4x8"
+		"_3x1 _3x2 _3x3 _3x4 _3x5 _3x6 _3x7 _3x8"
+		"_2x1 _2x2 _2x3 _2x4 _2x5 _2x6 _2x7 _2x8"
+		"_1x1 _1x2 _1x3 _1x4 _1x5 _1x6 _1x7 _1x8"
+	;
+	justify-content: center;
+}
+
+.board>div.light {
+			background: var(--lightercolor);
+
+		}
+
+.board>div.light.move {
+				background: var(--lightmove);
+			}
+
+.board>div.light.take,
+			.board>div.light.check {
+				background: var(--lighttake) !important;
+			}
+
+.board>div.light.castle {
+				background: aquamarine;
+			}
+
+.board>div.light.last {
+				background: radial-gradient(var(--lightercolor),
+						var(--lightercolor) 55%,
+						var(--darkercolor) 55%,
+						var(--darkercolor) 65%,
+						var(--lightercolor) 65%);
+			}
+
+.board>div.dark {
+			background: var(--darkercolor);
+		}
+
+.board>div.dark.move {
+				background: var(--darkmove);
+			}
+
+.board>div.dark.take,
+			.board>div.dark.check {
+				background: var(--darktake) !important;
+			}
+
+.board>div.dark.castle {
+				background: mediumaquamarine;
+			}
+
+.board>div.dark.last {
+				background: radial-gradient(var(--darkercolor),
+						var(--darkercolor) 55%,
+						var(--lightercolor) 55%,
+						var(--lightercolor) 65%,
+						var(--darkercolor) 65%);
+			}
+
+.center {
+	z-index: 4;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: inherit;
+}
+
+
+.back {
+	z-index: 2 !important;
+}
+
+
+.back {
+	background-color: gray;
+	opacity: 0.75;
+	width: 100%;
+	height: 100vh;
+}
+
+.magic {
+	display: none !important;
+}
+
+div.tile {
+		display: grid;
+		grid-template-columns: 1.5fr 9fr 1.5fr;
+		grid-template-rows: 1fr;
+		justify-content: left;
+		align-content: center;
+	}
+
+div.tile::before {
+			content: attr(id);
+			color: var(--midcolor);
+			font-size: 1.5vmin;
+		}
+
+div.tile>span {
+			font-size: min(9vmin, calc((96vw - 100px)/8*0.75));
+			height: -moz-min-content;
+			height: min-content;
+			width: -moz-min-content;
+			width: min-content;
+		}
+
+div.tile.king>span::before {
+			content: "♚";
+		}
+
+div.tile.queen>span::before {
+			content: "♛";
+		}
+
+div.tile.bishop>span::before {
+			content: "♝";
+		}
+
+div.tile.knight>span::before {
+			content: "♞";
+		}
+
+div.tile.rook>span::before {
+			content: "♜";
+		}
+
+div.tile.pawn>span::before {
+			content: "♟";
+		}
+
+div.p1>span {
+		color: var(--player1);
+		text-shadow: 0 0 2px var(--player1back);
+	}
+
+div.p2>span {
+		color: var(--player2);
+		text-shadow: 0 0 2px var(--player2back);
+	}
+
+div#pawnSwap {
+		display: grid;
+		grid-template-columns: repeat(2, 12vmin);
+		grid-template-rows: 6vmin repeat(2, 12vmin);
+		grid-template-areas:
+			"a a"
+			"1 2"
+			"3 4";
+		grid-gap: 1vmin;
+		gap: 1vmin;
+		font-size: 9vmin;
+		justify-items: center;
+	}
+
+div#pawnSwap>span {
+			font-size: 3vmin;
+			grid-area: a;
+		}
+
+div#pawnSwap.p1>div {
+			color: var(--player1);
+		}
+
+div#pawnSwap.p2>div {
+			color: var(--player2);
+		}
+
+@media (orientation: landscape) {
+	#contentContainer {
+		flex-direction: row;
+	}
+}
+
+@media (orientation: portrait) {
+	#contentContainer {
+		flex-direction: column;
+	}
+
+	.board {
+		grid-template-columns: repeat(8, min(12vmin, calc((96vh - 60px)/8)));
+		grid-template-rows: repeat(8, min(12vmin, calc((96vh - 60px)/8)));
+	}
+
+	div.tile>span {
+		font-size: 9vmin;
+	}
+
+	#undo,
+	#config {
+		top: 0;
+	}
+}
